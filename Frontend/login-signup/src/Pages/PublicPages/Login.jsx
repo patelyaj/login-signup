@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '../../redux/Features/authSlice';
 import { useDispatch } from 'react-redux';
-
+import { toast } from "react-toastify";
 function Login() {
 
     const dispatch = useDispatch();
@@ -27,8 +27,18 @@ function Login() {
         }),
 
         onSubmit: async (values) => {
-            await dispatch(loginUser(values)).unwrap();
-            navigate("/dashboard"); // ✅ PERFECT PLACE
+            try {
+                await dispatch(loginUser(values)).unwrap();
+
+                toast.success("Login successful ✅");
+
+                navigate("/dashboard");
+
+            } catch (error) {
+
+                toast.error(error || "Login failed ❌");
+
+            }
         }
     });
     return (

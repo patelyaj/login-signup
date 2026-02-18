@@ -4,6 +4,8 @@ import { configDotenv } from 'dotenv';
 import connectDb from './config/configDb.js';
 import authRoutes from './routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
+import productRoutes from './routes/productRoutes.js';
+
 configDotenv();
 connectDb();
 
@@ -18,6 +20,7 @@ app.use(cors({
 // app.use(express.urlencoded(true));
 
 app.use('/users',authRoutes);
+app.use('/product',productRoutes);
 
 app.get('/checkbackend',(req,res)=>{
     // console.log('hel');

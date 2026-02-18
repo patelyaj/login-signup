@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 
 const PrivateRoute = () => {
 
-    const { token } = useSelector((state) => state.auth);
+    const { isAuthenticated } = useSelector((state) => state.auth);
 
-    return token
+    return isAuthenticated
         ? <Outlet />
         : <Navigate to="/login" replace />;
 };

@@ -25,9 +25,9 @@ export const registerUser = async (req, res) => {
     
         // Check if user already exists
         // console.log(req.body);
-        const userExists = await User.findOne({ $or: [{ email }, { mobileno }] });    
+        const userExists = await User.findOne({  email  });    
         if (userExists) {
-            return res.status(400).json({ error: "User with this email or mobile already exists" });
+            return res.status(400).json({ error: "User with this email already exists" });
         }
         // Hash the password
         const salt = await bcrypt.genSalt(10);
@@ -112,3 +112,21 @@ export const loginUser = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+export const logoutUser = async(req,res)=>{
+
+
+    // res.cookie('jwt', '', {
+    //     httpOnly: true, 
+    //     expires: new Date(0) // Expire immediately (1970)
+    // });
+    
+    try {
+        res.clearCookie('jwt', { httpOnly: true});
+
+        res.status(201).json({ message: "User logged out successfully" });
+
+    } catch (error) {
+        res.status(500).json('internal server error logout failed');
+    }
+}

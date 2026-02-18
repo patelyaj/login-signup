@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../redux/Features/authSlice';
+import { toast } from "react-toastify";
 function Signup() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -36,12 +37,21 @@ function Signup() {
 
         }),
 
-        onSubmit: async(values) => {
+        onSubmit: async (values) => {
+            try {
                 await dispatch(registerUser(values)).unwrap();
 
-        navigate("/dashboard"); // ✅ PERFECT PLACE
+                toast.success("Signup successful 🎉");
 
+                navigate("/dashboard");
+
+            } catch (error) {
+
+                toast.error(error || "Signup failed ❌");
+
+            }
         }
+
     });
 
     return (
