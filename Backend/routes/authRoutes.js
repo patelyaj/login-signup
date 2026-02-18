@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
-import usermodel from "../models/usermodel";
+// import user from "../models/userModel";
 import express from "express";
-import { login } from "../controllers/authControllers";
+import { registerUser } from "../controllers/authControllers.js";
+import { loginUser } from "../controllers/authControllers.js";
 
 const router = express.Router();
 
-router.post('/login',login);
+router.post("/signup", registerUser);
+router.post("/login", loginUser);
+
+export default router;
